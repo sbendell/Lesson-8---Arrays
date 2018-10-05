@@ -3,6 +3,8 @@
 
 #include "stdafx.h"
 #include <iostream>
+#include <random>
+#include <time.h>
 
 using namespace std;
 
@@ -22,9 +24,102 @@ void Print_Array(char charArr[]){
 	}
 }
 
+bool** CreateBattleship() {
+	int shipAlignment = rand() % 2;
+	int shipXPos;
+	int shipYPos;
+
+	bool** battleshipPosition = new bool*[8];
+	for (int i = 0; i < 8; i++)
+	{
+		battleshipPosition[i] = new bool[8];
+		for (int x = 0; x < 8; x++)
+		{
+			battleshipPosition[i][x] = false;
+		}
+	}
+
+	if (shipAlignment == 0) {
+		shipYPos = rand() % 6;
+		bool* yPos1 = battleshipPosition[shipYPos];
+		bool* yPos2 = battleshipPosition[shipYPos + 1];
+		bool* yPos3 = battleshipPosition[shipYPos + 2];
+		shipXPos = rand() % 8;
+		yPos1[shipXPos] = true;
+		yPos2[shipXPos] = true;
+		yPos3[shipXPos] = true;
+	}
+	else {
+		shipYPos = rand() % 8;
+		bool* yPos = battleshipPosition[shipYPos];
+		shipXPos = rand() % 6;
+		yPos[shipXPos] = true;
+		yPos[shipXPos + 1] = true;
+		yPos[shipXPos + 2] = true;
+	}
+
+	return battleshipPosition;
+}
+
+void PrintBattleship(bool** battleship, int xGuess, int yGuess) {
+	for (int y = 0; y < 8; y++)
+	{
+		for (int x = 0; x < 8; x++)
+		{
+			if (xGuess == x &&  yGuess == y) {
+				cout << "X ";
+			}
+			else {
+				cout << battleship[y][x] << " ";
+			}
+		}
+		cout << "\n";
+	}
+}
+
 int main()
 {
-	const int CONST_VALUE = 3;
+	srand(time(NULL));
+
+	int tries = 8;
+	int xGuess;
+	int yGuess;
+	bool hit = false;
+
+	bool** battleship = CreateBattleship();
+
+	PrintBattleship(battleship, 4, 4);
+
+	while (tries > 0 && hit == false) {
+		cout << "Please guess x position.\n";
+		cin >> xGuess;
+		cout << "Please guess y position\n";
+		cin >> yGuess;
+
+		if (battleship[yGuess-1][xGuess-1]) {
+			hit = true;
+		}
+		else {
+			cout << "You did not hit the ship.\n";
+		}
+		tries--;
+	}
+
+	if (hit) {
+		cout << "You hit the ship!\n";
+	}
+	else {
+		cout << "You did not hit the ship.\n";
+	}
+
+	PrintBattleship(battleship, xGuess-1, yGuess-1);
+
+	for (int i = 0; i < 8; i++)
+	{
+		delete[] battleship[i];
+	}
+
+	/*const int CONST_VALUE = 3;
 	float ave;
 
 	// stack based 1-d arrays
@@ -73,7 +168,7 @@ int main()
 		}
 	}
 
-	Print_Array(myName);
+	Print_Array(myName);*/
 
 	int a = 2;
 
