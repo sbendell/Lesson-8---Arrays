@@ -63,10 +63,12 @@ int main()
 	{
 		if (i < 3) {
 			*firstName = myName[i];
+			cout << *firstName;
 			firstName++;
 		}
 		else if (i > 3) {
 			*lastName = myName[i];
+			cout << *lastName;
 			lastName++;
 		}
 	}
