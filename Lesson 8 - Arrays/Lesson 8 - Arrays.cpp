@@ -56,6 +56,21 @@ int main()
 
 	char myName[11] = { 'S', 'a', 'm', ' ', 'B', 'e', 'n', 'd', 'e', 'l', 'l' };
 
+	char* firstName = new char[3] { NULL, NULL, NULL};
+	char* lastName = new char[7] { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+
+	for (int i = 0; i < 11; i++)
+	{
+		if (i < 3) {
+			*firstName = myName[i];
+			firstName++;
+		}
+		else if (i > 3) {
+			*lastName = myName[i];
+			lastName++;
+		}
+	}
+
 	Print_Array(myName);
 
 	int a = 2;
