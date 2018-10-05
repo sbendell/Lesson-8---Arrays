@@ -16,6 +16,12 @@ float calc_avg(const int* arr, const int val) {
 	return (sum / (float)val);
 }
 
+void Print_Array(char charArr[]){
+	for (int i = 0; i < 11; i++) {
+		cout << charArr[i];
+	}
+}
+
 int main()
 {
 	const int CONST_VALUE = 3;
@@ -50,9 +56,7 @@ int main()
 
 	char myName[11] = { 'S', 'a', 'm', ' ', 'B', 'e', 'n', 'd', 'e', 'l', 'l' };
 
-	for (char &c : myName) {
-		cout << c;
-	}
+	Print_Array(myName);
 
 	int a = 2;
 
