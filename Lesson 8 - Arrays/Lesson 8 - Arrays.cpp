@@ -5,6 +5,7 @@
 #include <iostream>
 #include <random>
 #include <time.h>
+#include <collection.h>
 
 using namespace std;
 
@@ -61,16 +62,24 @@ bool** CreateBattleship() {
 	return battleshipPosition;
 }
 
-void PrintBattleship(bool** battleship, int xGuess, int yGuess) {
+void PrintBattleship(bool** battleship, vector<tuple<int, int>> hitLocs) {
 	for (int y = 0; y < 8; y++)
 	{
 		for (int x = 0; x < 8; x++)
 		{
-			if (xGuess == x &&  yGuess == y) {
-				cout << "X ";
-			}
-			else {
-				cout << battleship[y][x] << " ";
+			for (auto i = hitLocs.begin; i != hitLocs.end; i++)
+			{
+				if (i->get<0> == x && i->get<1> == y) {
+					if (battleship[i->get<1>][i->get<0>]) {
+						cout << "X ";
+					}
+					else {
+						cout << "x ";
+					}
+				}
+				else {
+					cout << battleship[y][x];
+				}
 			}
 		}
 		cout << "\n";
@@ -82,13 +91,12 @@ int main()
 	srand(time(NULL));
 
 	int tries = 8;
+	vector<tuple<int, int>> hitLocations;
 	int xGuess;
 	int yGuess;
 	bool hit = false;
 
 	bool** battleship = CreateBattleship();
-
-	PrintBattleship(battleship, 4, 4);
 
 	while (tries > 0 && hit == false) {
 		cout << "Please guess x position.\n";
@@ -96,7 +104,9 @@ int main()
 		cout << "Please guess y position\n";
 		cin >> yGuess;
 
-		if (battleship[yGuess-1][xGuess-1]) {
+		hitLocations.push_back(tuple<int, int>(xGuess - 1, yGuess - 1));
+
+		if (battleship[yGuess - 1][xGuess - 1]) {
 			hit = true;
 		}
 		else {
@@ -112,7 +122,7 @@ int main()
 		cout << "You did not hit the ship.\n";
 	}
 
-	PrintBattleship(battleship, xGuess-1, yGuess-1);
+	PrintBattleship(battleship, hitLocations);
 
 	for (int i = 0; i < 8; i++)
 	{
