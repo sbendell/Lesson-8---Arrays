@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include <iostream>
 #include "Battleship.h"
-#include <tuple>
 
 using namespace std;
 
@@ -59,8 +58,6 @@ int main()
 	int xGuess;
 	int yGuess;
 	bool hit = false;
-
-	bool** battleship = CreateBattleship();
 
 	while (attempts < 8 && hit == false) {
 		cout << "Please guess x position.\n";

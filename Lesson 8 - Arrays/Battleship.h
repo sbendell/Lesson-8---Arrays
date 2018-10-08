@@ -5,7 +5,10 @@
 class Battleship
 {
 public:
-	Battleship();
+	Battleship(pair<int, int> spawnPos, pair<int, int> spawnSize);
 	~Battleship();
+private:
+	pair<int, int> shipPosition;
+	pair<int, int> shipSize;
 };
 
