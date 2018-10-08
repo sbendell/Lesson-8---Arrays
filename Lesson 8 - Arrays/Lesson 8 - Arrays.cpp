@@ -5,7 +5,7 @@
 #include <iostream>
 #include <random>
 #include <time.h>
-#include <collection.h>
+#include <tuple>
 
 using namespace std;
 
@@ -62,24 +62,26 @@ bool** CreateBattleship() {
 	return battleshipPosition;
 }
 
-void PrintBattleship(bool** battleship, vector<tuple<int, int>> hitLocs) {
+void PrintBattleship(bool** battleship, vector<pair<int, int>> hitLocs, int attempts) {
 	for (int y = 0; y < 8; y++)
 	{
 		for (int x = 0; x < 8; x++)
 		{
-			for (auto i = hitLocs.begin; i != hitLocs.end; i++)
+			bool printed = false;
+			for (int i = 0; i < attempts; i++)
 			{
-				if (i->get<0> == x && i->get<1> == y) {
-					if (battleship[i->get<1>][i->get<0>]) {
+				if (hitLocs[i].first == x && hitLocs[i].second == y) {
+					printed = true;
+					if (battleship[hitLocs[i].second][hitLocs[i].first]) {
 						cout << "X ";
 					}
 					else {
 						cout << "x ";
 					}
 				}
-				else {
-					cout << battleship[y][x];
-				}
+			}
+			if (!printed) {
+				cout << battleship[y][x] << " ";
 			}
 		}
 		cout << "\n";
@@ -90,29 +92,29 @@ int main()
 {
 	srand(time(NULL));
 
-	int tries = 8;
-	vector<tuple<int, int>> hitLocations;
+	int attempts = 0;
+	vector<pair<int, int>> hitLocations;
 	int xGuess;
 	int yGuess;
 	bool hit = false;
 
 	bool** battleship = CreateBattleship();
 
-	while (tries > 0 && hit == false) {
+	while (attempts < 8 && hit == false) {
 		cout << "Please guess x position.\n";
 		cin >> xGuess;
 		cout << "Please guess y position\n";
 		cin >> yGuess;
 
-		hitLocations.push_back(tuple<int, int>(xGuess - 1, yGuess - 1));
+		hitLocations.push_back(pair<int, int>(xGuess - 1, yGuess - 1));
 
 		if (battleship[yGuess - 1][xGuess - 1]) {
 			hit = true;
 		}
 		else {
-			cout << "You did not hit the ship.\n";
+			cout << "You missed the ship.\n";
 		}
-		tries--;
+		attempts++;
 	}
 
 	if (hit) {
@@ -122,7 +124,7 @@ int main()
 		cout << "You did not hit the ship.\n";
 	}
 
-	PrintBattleship(battleship, hitLocations);
+	PrintBattleship(battleship, hitLocations, attempts);
 
 	for (int i = 0; i < 8; i++)
 	{
