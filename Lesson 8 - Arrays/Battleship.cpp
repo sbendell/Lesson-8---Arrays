@@ -20,6 +20,14 @@ Battleship::Battleship(pair<int, int> spawnPos, pair<int, int> spawnSize) :
 	shipSize(spawnSize.first, spawnSize.second) {
 }
 
+pair<int, int> Battleship::get_ship_position() const {
+	return shipPosition;
+}
+
+pair<int, int> Battleship::get_ship_size() const {
+	return shipSize;
+}
+
 void Battleship::hit(int hitX, int hitY) {
 	for (int i = 0; i < hitPoints.size; i++)
 	{

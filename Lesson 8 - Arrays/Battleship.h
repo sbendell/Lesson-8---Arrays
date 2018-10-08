@@ -8,6 +8,8 @@ public:
 	Battleship(int spawnPosX, int spawnPosY, int spawnSizeX, int spawnSizeY);
 	Battleship(pair<int, int> spawnPos, pair<int, int> spawnSize);
 	~Battleship();
+	pair<int, int> get_ship_position() const;
+	pair<int, int> get_ship_size() const;
 	void hit(int hitX, int hitY);
 	bool IsDead();
 private:
