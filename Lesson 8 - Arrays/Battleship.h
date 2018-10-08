@@ -9,6 +9,7 @@ public:
 	Battleship(pair<int, int> spawnPos, pair<int, int> spawnSize);
 	~Battleship();
 	void hit(int hitX, int hitY);
+	bool IsDead();
 private:
 	pair<int, int> shipPosition;
 	pair<int, int> shipSize;
