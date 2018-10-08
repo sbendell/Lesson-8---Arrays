@@ -29,6 +29,13 @@ void Battleship::hit(int hitX, int hitY) {
 	}
 }
 
+bool Battleship::IsDead() {
+	if (hitPoints.size > 0)
+		return false;
+	else
+		return true;
+}
+
 Battleship::~Battleship()
 {
 }
