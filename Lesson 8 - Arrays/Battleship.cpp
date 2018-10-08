@@ -6,11 +6,27 @@ using namespace std;
 Battleship::Battleship(int spawnPosX, int spawnPosY, int spawnSizeX, int spawnSizeY):
 	shipPosition(spawnPosX, spawnPosY),
 	shipSize(spawnSizeX, spawnSizeY){
+	for (int x = 0; x < spawnSizeX; x++)
+	{
+		for (int y = 0; y < spawnSizeY; y++)
+		{
+			hitPoints.push_back(make_pair(x, y));
+		}
+	}
 }
 
 Battleship::Battleship(pair<int, int> spawnPos, pair<int, int> spawnSize) :
 	shipPosition(spawnPos.first, spawnPos.second),
 	shipSize(spawnSize.first, spawnSize.second) {
+}
+
+void Battleship::hit(int hitX, int hitY) {
+	for (int i = 0; i < hitPoints.size; i++)
+	{
+		if (hitPoints[i].first && hitPoints[i].second) {
+			hitPoints.erase[i];
+		}
+	}
 }
 
 Battleship::~Battleship()
