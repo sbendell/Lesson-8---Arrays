@@ -6,7 +6,7 @@ using namespace std;
 class Battlefield
 {
 public:
-	Battlefield(int width, int height, int shipAmount, int turncount);
+	Battlefield(int Width, int Height, int shipAmount, int turncount);
 	~Battlefield();
 	void ProgressGame();
 	int remainingTurns() const;
@@ -15,5 +15,7 @@ private:
 	vector<Battleship*> ships;
 	vector<pair<pair<int, int>, char>> shotAttempts;
 	int turnCount;
+	int width;
+	int height;
 };
 

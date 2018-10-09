@@ -3,9 +3,11 @@
 #include <iostream>
 
 
-Battlefield::Battlefield(int width, int height, int shipAmount, int turncount)
+Battlefield::Battlefield(int Width, int Height, int shipAmount, int turncount)
 {
 	turnCount = turncount;
+	width = Width;
+	height = Height;
 	for (int x = 0; x < width; x++)
 	{
 		for (int y = 0; y < height; y++)
@@ -28,6 +30,7 @@ Battlefield::Battlefield(int width, int height, int shipAmount, int turncount)
 
 void Battlefield::ProgressGame() {
 	while (remainingTurns() > 0) {
+		PrintBattlefield();
 		int x;
 		int y;
 
@@ -53,6 +56,25 @@ void Battlefield::ProgressGame() {
 
 int Battlefield::remainingTurns() const {
 	return turnCount;
+}
+
+void Battlefield::PrintBattlefield() const {
+	for (int y = 0; y < width; y++)
+	{
+		for (int x = 0; x < height; x++)
+		{
+			for (auto shot : shotAttempts)
+			{
+				if (shot.first.first == x && shot.first.second == y) {
+					cout << shot.second << " ";
+				}
+				else {
+					cout << "^ ";
+				}
+			}
+		}
+		cout << "\n";
+	}
 }
 
 Battlefield::~Battlefield()
