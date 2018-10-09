@@ -10,7 +10,7 @@ Battleship::Battleship(int spawnPosX, int spawnPosY, int spawnSizeX, int spawnSi
 	{
 		for (int y = 0; y < spawnSizeY; y++)
 		{
-			hitPoints.push_back(make_pair(x, y));
+			hitPoints.push_back(make_pair(make_pair(x, y), false));
 		}
 	}
 }
@@ -31,8 +31,8 @@ pair<int, int> Battleship::get_ship_size() const {
 void Battleship::hit(int hitX, int hitY) {
 	for (auto i = hitPoints.begin(); i != hitPoints.end(); i++)
 	{
-		if (i->first && i->second) {
-			hitPoints.erase(i);
+		if (i->first.first == hitX && i->first.second == hitY) {
+			i->second = true;
 		}
 	}
 }

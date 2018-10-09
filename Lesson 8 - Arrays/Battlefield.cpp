@@ -41,23 +41,26 @@ void Battlefield::ProgressGame() {
 		y--;
 
 		int shipsDead = 0;
+		bool didHit = false;
 
 		for (auto i = 0; i < ships.size(); i++)
 		{
-			if (ships[i]->IsDead() == false) {
+			if (!ships[i]->IsDead()) {
 				if ((x >= ships[i]->get_ship_position().first && x < ships[i]->get_ship_position().first + ships[i]->get_ship_size().first) &&
 					(y >= ships[i]->get_ship_position().second && y < ships[i]->get_ship_position().second + ships[i]->get_ship_size().second)) {
-					shotAttempts.push_back(make_pair(make_pair(x, y), '+'));
+					didHit = true;
 					ships[i]->hit(x, y);
 				}
-				else {
-					shotAttempts.push_back(make_pair(make_pair(x, y), '-'));
-				}
 			}
-
 			if (ships[i]->IsDead()) {
 				shipsDead++;
 			}
+		}
+		if (didHit) {
+			shotAttempts.push_back(make_pair(make_pair(x, y), '+'));
+		}
+		else {
+			shotAttempts.push_back(make_pair(make_pair(x, y), '-'));
 		}
 		if (shipsDead == ships.size()) {
 			gameOver = true;

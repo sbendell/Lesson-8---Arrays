@@ -17,6 +17,6 @@ public:
 private:
 	pair<int, int> shipPosition;
 	pair<int, int> shipSize;
-	vector<pair<int, int>> hitPoints;
+	vector<pair<pair<int, int>, bool>> hitPoints;
 };
 
