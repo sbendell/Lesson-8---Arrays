@@ -29,16 +29,16 @@ pair<int, int> Battleship::get_ship_size() const {
 }
 
 void Battleship::hit(int hitX, int hitY) {
-	for (int i = 0; i < hitPoints.size; i++)
+	for (auto i = hitPoints.begin(); i != hitPoints.end(); i++)
 	{
-		if (hitPoints[i].first && hitPoints[i].second) {
-			hitPoints.erase[i];
+		if (i->first && i->second) {
+			hitPoints.erase(i);
 		}
 	}
 }
 
 bool Battleship::IsDead() {
-	if (hitPoints.size > 0)
+	if (hitPoints.size() > 0)
 		return false;
 	else
 		return true;

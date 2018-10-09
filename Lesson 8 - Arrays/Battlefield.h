@@ -11,6 +11,7 @@ public:
 	void ProgressGame();
 	int remainingTurns() const;
 	void PrintBattlefield() const;
+	void PrintBattlefieldDebug() const;
 private:
 	vector<Battleship*> ships;
 	vector<pair<pair<int, int>, char>> shotAttempts;
