@@ -29,7 +29,8 @@ Battlefield::Battlefield(int Width, int Height, int shipAmount, int turncount)
 }
 
 void Battlefield::ProgressGame() {
-	while (remainingTurns() > 0) {
+	bool gameOver = false;
+	while (remainingTurns() > 0 && !gameOver) {
 		PrintBattlefield();
 		int x;
 		int y;
@@ -38,6 +39,8 @@ void Battlefield::ProgressGame() {
 		cin >> x;
 		cout << "Guess Y: \n";
 		cin >> y;
+
+		int shipsDead = 0;
 
 		for (int i = 0; i < ships.size; i++)
 		{
@@ -50,8 +53,23 @@ void Battlefield::ProgressGame() {
 				shotAttempts.push_back(make_pair(make_pair(x, y), '-'));
 				cout << "You missed!\n";
 			}
+
+			if (ships[i]->IsDead) {
+				shipsDead++;
+			}
+		}
+		if (shipsDead == ships.size) {
+			gameOver = true;
 		}
 	}
+
+	if (gameOver) {
+		cout << "You killed every ship!!\n";
+	}
+	else {
+		cout << "You didnt kill every ship...\n";
+	}
+	PrintBattlefield();
 }
 
 int Battlefield::remainingTurns() const {

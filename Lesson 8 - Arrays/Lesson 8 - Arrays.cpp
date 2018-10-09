@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include <iostream>
-#include "Battleship.h"
+#include "Battlefield.h"
 
 using namespace std;
 
@@ -27,6 +27,11 @@ int main()
 {
 	srand(time(NULL));
 
+	Battlefield battlefield(8, 8, 2, 20);
+	battlefield.ProgressGame();
+
+	int x;
+	cin >> x;
 
 	/*const int CONST_VALUE = 3;
 	float ave;
