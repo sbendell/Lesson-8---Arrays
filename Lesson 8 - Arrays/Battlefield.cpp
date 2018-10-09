@@ -34,7 +34,7 @@ void Battlefield::ProgressGame() {
 		int x;
 		int y;
 
-		cout << "Take a shot! Guess X: \n";
+		cout << "Take a shot!\nGuess X: \n";
 		cin >> x;
 		cout << "Guess Y: \n";
 		cin >> y;
