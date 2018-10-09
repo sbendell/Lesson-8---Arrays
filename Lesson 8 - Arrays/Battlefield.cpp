@@ -13,8 +13,8 @@ Battlefield::Battlefield(int Width, int Height, int shipAmount, int turncount)
 
 	for (int i = 0; i < shipAmount; i++)
 	{
-		int shipWidth = rand() % 6 + 1;
-		int shipHeight = rand() % 6 + 1;
+		int shipWidth = rand() % 4 + 1;
+		int shipHeight = rand() % 3 + 1;
 
 		int shipX = rand() % (width - (shipWidth - 1));
 		int shipY = rand() % (height - (shipHeight - 1));
@@ -28,7 +28,8 @@ Battlefield::Battlefield(int Width, int Height, int shipAmount, int turncount)
 void Battlefield::ProgressGame() {
 	bool gameOver = false;
 	while (remainingTurns() > 0 && !gameOver) {
-		//PrintBattlefield();
+		PrintBattlefield();
+		cout << "\n";
 		PrintBattlefieldDebug();
 		int x;
 		int y;
@@ -56,12 +57,29 @@ void Battlefield::ProgressGame() {
 				shipsDead++;
 			}
 		}
-		if (didHit) {
-			shotAttempts.push_back(make_pair(make_pair(x, y), '+'));
+		bool contained = false;
+
+		for (int i = 0; i < shotAttempts.size(); i++)
+		{
+			if (shotAttempts[i].first.first == x && shotAttempts[i].first.second == y) {
+				contained = true;
+			}
+		}
+
+		if (!contained) {
+			if (didHit) {
+				shotAttempts.push_back(make_pair(make_pair(x, y), '+'));
+				cout << "You hit a ship!\n";
+			}
+			else {
+				shotAttempts.push_back(make_pair(make_pair(x, y), '-'));
+				cout << "You missed...\n";
+			}
 		}
 		else {
-			shotAttempts.push_back(make_pair(make_pair(x, y), '-'));
+			cout << "You already shot here...\n";
 		}
+
 		if (shipsDead == ships.size()) {
 			gameOver = true;
 		}
@@ -90,6 +108,7 @@ void Battlefield::PrintBattlefield() const {
 			{
 				if (shot.first.first == x && shot.first.second == y) {
 					cout << shot.second << " ";
+					printed = true;
 				}
 			}
 			if (!printed) {

@@ -1,14 +1,15 @@
 #include "stdafx.h"
 #include "Battleship.h"
+#include <iostream>
 
 using namespace std;
 
 Battleship::Battleship(int spawnPosX, int spawnPosY, int spawnSizeX, int spawnSizeY):
 	shipPosition(spawnPosX, spawnPosY),
 	shipSize(spawnSizeX, spawnSizeY){
-	for (int x = 0; x < spawnSizeX; x++)
+	for (int x = spawnPosX; x < spawnPosX + spawnSizeX; x++)
 	{
-		for (int y = 0; y < spawnSizeY; y++)
+		for (int y = spawnPosY; y < spawnPosY + spawnSizeY; y++)
 		{
 			hitPoints.push_back(make_pair(make_pair(x, y), false));
 		}
@@ -38,7 +39,14 @@ void Battleship::hit(int hitX, int hitY) {
 }
 
 bool Battleship::IsDead() {
-	if (hitPoints.size() > 0)
+	int counter = 0;
+	for (auto hp : hitPoints)
+	{
+		if (hp.second) {
+			counter++;
+		}
+	}
+	if (counter != hitPoints.size())
 		return false;
 	else
 		return true;
