@@ -3,9 +3,7 @@
 
 #include "stdafx.h"
 #include <iostream>
-#include <random>
-#include <time.h>
-#include <tuple>
+#include "Battlefield.h"
 
 using namespace std;
 
@@ -25,111 +23,15 @@ void Print_Array(char charArr[]){
 	}
 }
 
-bool** CreateBattleship() {
-	int shipAlignment = rand() % 2;
-	int shipXPos;
-	int shipYPos;
-
-	bool** battleshipPosition = new bool*[8];
-	for (int i = 0; i < 8; i++)
-	{
-		battleshipPosition[i] = new bool[8];
-		for (int x = 0; x < 8; x++)
-		{
-			battleshipPosition[i][x] = false;
-		}
-	}
-
-	if (shipAlignment == 0) {
-		shipYPos = rand() % 6;
-		bool* yPos1 = battleshipPosition[shipYPos];
-		bool* yPos2 = battleshipPosition[shipYPos + 1];
-		bool* yPos3 = battleshipPosition[shipYPos + 2];
-		shipXPos = rand() % 8;
-		yPos1[shipXPos] = true;
-		yPos2[shipXPos] = true;
-		yPos3[shipXPos] = true;
-	}
-	else {
-		shipYPos = rand() % 8;
-		bool* yPos = battleshipPosition[shipYPos];
-		shipXPos = rand() % 6;
-		yPos[shipXPos] = true;
-		yPos[shipXPos + 1] = true;
-		yPos[shipXPos + 2] = true;
-	}
-
-	return battleshipPosition;
-}
-
-void PrintBattleship(bool** battleship, vector<pair<int, int>> hitLocs, int attempts) {
-	for (int y = 0; y < 8; y++)
-	{
-		for (int x = 0; x < 8; x++)
-		{
-			bool printed = false;
-			for (int i = 0; i < attempts; i++)
-			{
-				if (hitLocs[i].first == x && hitLocs[i].second == y) {
-					printed = true;
-					if (battleship[hitLocs[i].second][hitLocs[i].first]) {
-						cout << "X ";
-					}
-					else {
-						cout << "x ";
-					}
-				}
-			}
-			if (!printed) {
-				cout << battleship[y][x] << " ";
-			}
-		}
-		cout << "\n";
-	}
-}
-
 int main()
 {
 	srand(time(NULL));
 
-	int attempts = 0;
-	vector<pair<int, int>> hitLocations;
-	int xGuess;
-	int yGuess;
-	bool hit = false;
+	Battlefield battlefield(8, 8, 2, 20);
+	battlefield.ProgressGame();
 
-	bool** battleship = CreateBattleship();
-
-	while (attempts < 8 && hit == false) {
-		cout << "Please guess x position.\n";
-		cin >> xGuess;
-		cout << "Please guess y position\n";
-		cin >> yGuess;
-
-		hitLocations.push_back(pair<int, int>(xGuess - 1, yGuess - 1));
-
-		if (battleship[yGuess - 1][xGuess - 1]) {
-			hit = true;
-		}
-		else {
-			cout << "You missed the ship.\n";
-		}
-		attempts++;
-	}
-
-	if (hit) {
-		cout << "You hit the ship!\n";
-	}
-	else {
-		cout << "You did not hit the ship.\n";
-	}
-
-	PrintBattleship(battleship, hitLocations, attempts);
-
-	for (int i = 0; i < 8; i++)
-	{
-		delete[] battleship[i];
-	}
+	int x;
+	cin >> x;
 
 	/*const int CONST_VALUE = 3;
 	float ave;
